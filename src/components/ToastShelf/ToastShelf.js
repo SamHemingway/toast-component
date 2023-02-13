@@ -2,35 +2,36 @@ import React from "react";
 
 import Toast from "../Toast";
 import styles from "./ToastShelf.module.css";
+import { ToastContext } from "../ToastProvider";
 
-// Dismissing a toast message:
-// Remove item with that key/ref from toastMessages
-
-function ToastShelf({ toastMessages, setToastMessages }) {
-  function handleDismiss(id) {
-    const nextToasts = toastMessages.filter((toast) => toast.id !== id);
-    setToastMessages(nextToasts);
-  }
+function ToastShelf() {
+  const { toastMessages } = React.useContext(ToastContext);
 
   return (
-    <ol className={styles.wrapper}>
-      {toastMessages.map(({ variant, message, id }) => {
-        return (
-          <li
-            className={styles.toastWrapper}
-            key={id}
-          >
-            <Toast
-              variant={variant}
-              dismiss={handleDismiss}
-              id={id}
+    toastMessages.length > 0 && (
+      <ol
+        className={styles.wrapper}
+        role="region"
+        aria-live="assertive"
+        aria-label="notification"
+      >
+        {toastMessages.map(({ variant, message, id }) => {
+          return (
+            <li
+              className={styles.toastWrapper}
+              key={id}
             >
-              {message}
-            </Toast>
-          </li>
-        );
-      })}
-    </ol>
+              <Toast
+                variant={variant}
+                id={id}
+              >
+                {message}
+              </Toast>
+            </li>
+          );
+        })}
+      </ol>
+    )
   );
 }
 
