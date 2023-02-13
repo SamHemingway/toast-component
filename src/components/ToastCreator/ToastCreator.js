@@ -35,6 +35,7 @@ function ToastCreator() {
             id="message"
             className={styles.messageInput}
             value={toastMessage}
+            required
             onChange={(event) => {
               const nextToastMessage = event.target.value;
               setToastMessage(nextToastMessage);

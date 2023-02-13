@@ -10,10 +10,11 @@ function ToastProvider({ children }) {
 
   const [toastMessages, setToastMessages] = React.useState([]);
 
-  useKeydown("Escape", (key) => {
-    if (key !== "Escape") return;
+  const handleEscape = React.useCallback(() => {
     setToastMessages([]);
-  });
+  }, []);
+
+  useKeydown("Escape", handleEscape);
 
   function handleAddToast() {
     const nextToast = {
